@@ -5,6 +5,14 @@ import java.util.Map;
 public class Laporan {
     private ManajerTransaksi manajerTransaksi;
 
+    public Laporan(ManajerTransaksi manajerTransaksi, double totalPemasukan, double totalPengeluaran,
+            Map<String, Double> kategoriSummary) {
+        this.manajerTransaksi = manajerTransaksi;
+        this.totalPemasukan = totalPemasukan;
+        this.totalPengeluaran = totalPengeluaran;
+        this.kategoriSummary = kategoriSummary;
+    }
+
     public Laporan(ManajerTransaksi manajerTransaksi) {
         this.manajerTransaksi = manajerTransaksi;
     }
