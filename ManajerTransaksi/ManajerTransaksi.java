@@ -1,59 +1,59 @@
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ManajerTransaksi {
-    List<Transaksi> transaksiList;
+    List<Transaksi> daftarTransaksi;
     double saldo;
 
-    public ManajerTransaksi(List<Transaksi> transaksiList, double saldo) {
-        this.transaksiList = transaksiList;
+    public ManajerTransaksi(List<Transaksi> daftarTransaksi, double saldo) {
+        this.daftarTransaksi = daftarTransaksi;
         this.saldo = saldo;
     }
 
-    public void tambahTransaksi(Transaksi t) {
-        if (t.getJumlah() >= 0 || t instanceof Pengeluaran) {  // Validasi jika pemasukan tidak negatif
-            transaksiList.add(t);
+    public void tambahTransaksi(Transaksi transaksi) {
+        if (transaksi.getJumlah() >= 0 || transaksi instanceof Pengeluaran) {  // Validasi jika pemasukan tidak negatif
+            daftarTransaksi.add(transaksi);
             hitungSaldo();
         } else {
             System.out.println("Jumlah transaksi tidak valid!");
         }
     }
 
-    public void hapusTransaksi(int index) {
-        if (index >= 0 && index < transaksiList.size()) {
-            transaksiList.remove(index);
+    public void hapusTransaksi(int indeks) {
+        if (indeks >= 0 && indeks < daftarTransaksi.size()) {
+            daftarTransaksi.remove(indeks);
             hitungSaldo();
         }
     }
 
-    public void editTransaksi(int index, Transaksi baru) {
-        if (index >= 0 && index < transaksiList.size()) {
-            transaksiList.set(index, baru);
+    public void ubahTransaksi(int indeks, Transaksi transaksiBaru) {
+        if (indeks >= 0 && indeks < daftarTransaksi.size()) {
+            daftarTransaksi.set(indeks, transaksiBaru);
             hitungSaldo();
         }
     }
 
-    public List<Transaksi> getTransaksi() {
-        return transaksiList;
+    public List<Transaksi> getDaftarTransaksi() {
+        return daftarTransaksi;
     }
 
-    public List<Transaksi> filterByKategori(String kategori) {
-        return transaksiList.stream()
-                             .filter(t -> t.getKategori().equalsIgnoreCase(kategori))  // Pastikan case-insensitive
-                             .collect(Collectors.toList());
+    public List<Transaksi> filterBerdasarkanKategori(String kategori) {
+        return daftarTransaksi.stream()
+                              .filter(t -> t.getKategori().equalsIgnoreCase(kategori))  // Pastikan case-insensitive
+                              .collect(Collectors.toList());
     }
 
-    public List<Transaksi> filterByTanggal(String tanggal) {
-        return transaksiList.stream()
-                             .filter(t -> t.getTanggal().equalsIgnoreCase(tanggal))  // Pastikan case-insensitive
-                             .collect(Collectors.toList());
+    public List<Transaksi> filterBerdasarkanTanggal(String tanggal) {
+        return daftarTransaksi.stream()
+                              .filter(t -> t.getTanggal().equalsIgnoreCase(tanggal))  // Pastikan case-insensitive
+                              .collect(Collectors.toList());
     }
 
-    public List<Transaksi> filterByType(String tipe) {
-        return transaksiList.stream()
-                             .filter(t -> (t instanceof Pemasukan && "Pemasukan".equalsIgnoreCase(tipe)) ||
-                                          (t instanceof Pengeluaran && "Pengeluaran".equalsIgnoreCase(tipe)))
-                             .collect(Collectors.toList());
+    public List<Transaksi> filterBerdasarkanTipe(String tipe) {
+        return daftarTransaksi.stream()
+                              .filter(t -> (t instanceof Pemasukan && "Pemasukan".equalsIgnoreCase(tipe)) ||
+                                           (t instanceof Pengeluaran && "Pengeluaran".equalsIgnoreCase(tipe)))
+                              .collect(Collectors.toList());
     }
 
     public double getSaldo() {
@@ -61,12 +61,8 @@ public class ManajerTransaksi {
     }
 
     public void hitungSaldo() {
-        saldo = transaksiList.stream()
-                             .mapToDouble(t -> t instanceof Pemasukan ? t.getJumlah() : -t.getJumlah())
-                             .sum();
+        saldo = daftarTransaksi.stream()
+                               .mapToDouble(t -> t instanceof Pemasukan ? t.getJumlah() : -t.getJumlah())
+                               .sum();
     }
 }
-
-
-
-// Kode masih error, menunggu kelas di anggota lain
