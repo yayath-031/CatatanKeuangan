@@ -1,13 +1,21 @@
 import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class ManajerTransaksi {
     List<Transaksi> daftarTransaksi;
     double saldo;
 
+    // Constructor dengan parameter
     public ManajerTransaksi(List<Transaksi> daftarTransaksi, double saldo) {
         this.daftarTransaksi = daftarTransaksi;
         this.saldo = saldo;
+    }
+
+    // Constructor default
+    public ManajerTransaksi() {
+        this.daftarTransaksi = new ArrayList<>();
+        this.saldo = 0.0;
     }
 
     public void tambahTransaksi(Transaksi transaksi) {
