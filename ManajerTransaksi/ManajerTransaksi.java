@@ -1,10 +1,11 @@
-import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ManajerTransaksi {
-    List<Transaksi> daftarTransaksi;
-    double saldo;
+    private List<Transaksi> daftarTransaksi;
+    private double saldo;
 
     // Constructor dengan parameter
     public ManajerTransaksi(List<Transaksi> daftarTransaksi, double saldo) {
@@ -19,18 +20,20 @@ public class ManajerTransaksi {
     }
 
     public void tambahTransaksi(Transaksi transaksi) {
-        if (transaksi.getJumlah() >= 0 || transaksi instanceof Pengeluaran) {  // Validasi jika pemasukan tidak negatif
-            daftarTransaksi.add(transaksi);
-            hitungSaldo();
-        } else {
-            System.out.println("Jumlah transaksi tidak valid!");
+        if (transaksi instanceof Pemasukan && transaksi.getJumlah() < 0) {
+            System.out.println("Jumlah pemasukan tidak boleh negatif!");
+            return;
         }
+        daftarTransaksi.add(transaksi);
+        hitungSaldo();
     }
 
     public void hapusTransaksi(int indeks) {
         if (indeks >= 0 && indeks < daftarTransaksi.size()) {
             daftarTransaksi.remove(indeks);
             hitungSaldo();
+        } else {
+            System.out.println("Indeks tidak valid!");
         }
     }
 
@@ -38,6 +41,8 @@ public class ManajerTransaksi {
         if (indeks >= 0 && indeks < daftarTransaksi.size()) {
             daftarTransaksi.set(indeks, transaksiBaru);
             hitungSaldo();
+        } else {
+            System.out.println("Indeks tidak valid!");
         }
     }
 
@@ -47,13 +52,13 @@ public class ManajerTransaksi {
 
     public List<Transaksi> filterBerdasarkanKategori(String kategori) {
         return daftarTransaksi.stream()
-                              .filter(t -> t.getKategori().equalsIgnoreCase(kategori))  // Pastikan case-insensitive
+                              .filter(t -> t.getKategori().equalsIgnoreCase(kategori))
                               .collect(Collectors.toList());
     }
 
-    public List<Transaksi> filterBerdasarkanTanggal(String tanggal) {
+    public List<Transaksi> filterBerdasarkanTanggal(LocalDate tanggal) {
         return daftarTransaksi.stream()
-                              .filter(t -> t.getTanggal().equalsIgnoreCase(tanggal))  // Pastikan case-insensitive
+                              .filter(t -> t.getTanggal().equals(tanggal))
                               .collect(Collectors.toList());
     }
 
@@ -68,7 +73,7 @@ public class ManajerTransaksi {
         return saldo;
     }
 
-    public void hitungSaldo() {
+    private void hitungSaldo() {
         saldo = daftarTransaksi.stream()
                                .mapToDouble(t -> t instanceof Pemasukan ? t.getJumlah() : -t.getJumlah())
                                .sum();
