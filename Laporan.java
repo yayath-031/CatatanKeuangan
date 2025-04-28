@@ -4,7 +4,11 @@ import java.util.Map;
 
 public class Laporan {
     private ManajerTransaksi manajerTransaksi;
+    private double totalPemasukan;
+    private double totalPengeluaran;
+    private Map<String, Double> kategoriSummary;
 
+    // Constructor lengkap
     public Laporan(ManajerTransaksi manajerTransaksi, double totalPemasukan, double totalPengeluaran,
             Map<String, Double> kategoriSummary) {
         this.manajerTransaksi = manajerTransaksi;
@@ -13,22 +17,25 @@ public class Laporan {
         this.kategoriSummary = kategoriSummary;
     }
 
+    // Constructor sederhana
     public Laporan(ManajerTransaksi manajerTransaksi) {
         this.manajerTransaksi = manajerTransaksi;
+        this.totalPemasukan = 0.0;
+        this.totalPengeluaran = 0.0;
+        this.kategoriSummary = new HashMap<>();
     }
 
     public void generateLaporanBulanan(int bulan, int tahun) {
-        List<Transaksi> semuaTransaksi = manajerTransaksi.getTransaksi();
+        List<Transaksi> semuaTransaksi = manajerTransaksi.getDaftarTransaksi();
 
-        double totalPemasukan = 0;
-        double totalPengeluaran = 0;
-        Map<String, Double> kategoriSummary = new HashMap<>();
+        // Reset nilai sebelum generate laporan baru
+        totalPemasukan = 0.0;
+        totalPengeluaran = 0.0;
+        kategoriSummary.clear();
 
         for (Transaksi transaksi : semuaTransaksi) {
-            // Asumsi format tanggal: "YYYY-MM-DD"
-            String[] parts = transaksi.getTanggal().split("-");
-            int tahunTransaksi = Integer.parseInt(parts[0]);
-            int bulanTransaksi = Integer.parseInt(parts[1]);
+            int tahunTransaksi = transaksi.getTanggal().getYear();
+            int bulanTransaksi = transaksi.getTanggal().getMonthValue();
 
             if (tahunTransaksi == tahun && bulanTransaksi == bulan) {
                 if (transaksi instanceof Pemasukan) {
@@ -37,34 +44,36 @@ public class Laporan {
                     totalPengeluaran += transaksi.getJumlah();
                 }
 
-                // Rangkuman per kategori
                 kategoriSummary.put(
                         transaksi.getKategori(),
                         kategoriSummary.getOrDefault(transaksi.getKategori(), 0.0) + transaksi.getJumlah());
             }
         }
-
-        // Simpan hasil di variabel agar bisa ditampilkan
-        this.totalPemasukan = totalPemasukan;
-        this.totalPengeluaran = totalPengeluaran;
-        this.kategoriSummary = kategoriSummary;
     }
 
-    private double totalPemasukan;
-    private double totalPengeluaran;
-    private Map<String, Double> kategoriSummary;
-
     public void tampilkanLaporan() {
-        System.out.println("===== LAPORAN BULANAN =====");
-        System.out.printf("Total Pemasukan : Rp %.2f\n", totalPemasukan);
-        System.out.printf("Total Pengeluaran : Rp %.2f\n", totalPengeluaran);
-        System.out.printf("Saldo Akhir : Rp %.2f\n", manajerTransaksi.getSaldo());
+        System.out.println("\n===== LAPORAN BULANAN =====");
+        System.out.printf("Total Pemasukan  : Rp %.2f\n", totalPemasukan);
+        System.out.printf("Total Pengeluaran: Rp %.2f\n", totalPengeluaran);
+        System.out.printf("Saldo Akhir      : Rp %.2f\n", manajerTransaksi.getSaldo());
         System.out.println("\nRangkuman per Kategori:");
-
         System.out.println("----------------------------");
         for (Map.Entry<String, Double> entry : kategoriSummary.entrySet()) {
             System.out.printf("%-20s : Rp %.2f\n", entry.getKey(), entry.getValue());
         }
-        System.out.println("----------------------------");
+        System.out.println("----------------------------\n");
+    }
+
+    // Getter tambahan jika nanti dibutuhkan
+    public double getTotalPemasukan() {
+        return totalPemasukan;
+    }
+
+    public double getTotalPengeluaran() {
+        return totalPengeluaran;
+    }
+
+    public Map<String, Double> getKategoriSummary() {
+        return kategoriSummary;
     }
 }
