@@ -1,6 +1,7 @@
 import java.io.*;
-import java.util.List;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PenyimpananData {
 
@@ -14,24 +15,22 @@ public class PenyimpananData {
                 writer.write("    \"tipe\": \"" + (t instanceof Pemasukan ? "Pemasukan" : "Pengeluaran") + "\",\n");
                 writer.write("    \"tanggal\": \"" + t.getTanggal() + "\",\n");
                 writer.write("    \"jumlah\": " + t.getJumlah() + ",\n");
-                writer.write("    \"kategori\": \"" + t.getKategori() + "\",\n");
-                writer.write("    \"keterangan\": \"" + t.getKeterangan() + "\"\n");
+                writer.write("    \"kategori\": \"" + escapeString(t.getKategori()) + "\",\n");
+                writer.write("    \"keterangan\": \"" + escapeString(t.getKeterangan()) + "\"\n");
                 writer.write("  }");
-
                 if (i < transaksiList.size() - 1) {
-                    writer.write(","); // Tambahkan koma kalau bukan item terakhir
+                    writer.write(",\n");
                 }
-                writer.write("\n");
             }
-            writer.write("]");
+            writer.write("\n]");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Gagal menyimpan file JSON: " + e.getMessage());
         }
     }
 
     // Muat transaksi dari file JSON manual
     public static List<Transaksi> muatDariJSON(String namaFile) {
-        List<Transaksi> transaksiList = new java.util.ArrayList<>();
+        List<Transaksi> transaksiList = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(namaFile))) {
             StringBuilder jsonBuilder = new StringBuilder();
@@ -39,26 +38,25 @@ public class PenyimpananData {
             while ((line = reader.readLine()) != null) {
                 jsonBuilder.append(line.trim());
             }
-            String json = jsonBuilder.toString();
 
-            // Manual parsing sederhana (tanpa library)
+            String json = jsonBuilder.toString();
+            if (json.isEmpty()) return transaksiList; // Jika file kosong
+
             json = json.substring(1, json.length() - 1); // Buang [ dan ]
             String[] entries = json.split("\\},\\{");
 
             for (String entry : entries) {
                 entry = entry.replace("{", "").replace("}", "");
 
-                String[] fields = entry.split(",");
-                String tipe = "";
-                String tanggal = "";
+                String[] fields = entry.split("\",\"");
+                String tipe = "", tanggal = "", kategori = "", keterangan = "";
                 double jumlah = 0;
-                String kategori = "";
-                String keterangan = "";
 
                 for (String field : fields) {
-                    String[] keyValue = field.split(":");
-                    String key = keyValue[0].trim().replace("\"", "");
-                    String value = keyValue[1].trim().replace("\"", "");
+                    field = field.replace("\"", ""); // Buang semua "
+                    String[] keyValue = field.split(":", 2);
+                    String key = keyValue[0].trim();
+                    String value = keyValue[1].trim();
 
                     switch (key) {
                         case "tipe":
@@ -89,9 +87,14 @@ public class PenyimpananData {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Gagal membaca file JSON: " + e.getMessage());
         }
 
         return transaksiList;
+    }
+
+    // Fungsi tambahan untuk escape karakter khusus dalam string JSON
+    private static String escapeString(String text) {
+        return text.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 }
