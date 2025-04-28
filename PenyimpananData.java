@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.List;
+import java.time.LocalDate;
 
 public class PenyimpananData {
 
@@ -78,10 +79,12 @@ public class PenyimpananData {
                     }
                 }
 
+                LocalDate tanggalParsed = LocalDate.parse(tanggal);
+
                 if (tipe.equals("Pemasukan")) {
-                    transaksiList.add(new Pemasukan(tanggal, jumlah, kategori, keterangan));
+                    transaksiList.add(new Pemasukan(tanggalParsed, jumlah, kategori, keterangan));
                 } else if (tipe.equals("Pengeluaran")) {
-                    transaksiList.add(new Pengeluaran(tanggal, jumlah, kategori, keterangan));
+                    transaksiList.add(new Pengeluaran(tanggalParsed, jumlah, kategori, keterangan));
                 }
             }
 
