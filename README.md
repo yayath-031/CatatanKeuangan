@@ -48,5 +48,15 @@ Aplikasi ini dibangun menggunakan prinsip **Object-Oriented Programming (OOP)**:
 
 ---
 
-## 📁 Struktur File
+## 🧩 Struktur Class
 
+```bash
+├── Main.java                # Entry point aplikasi
+├── ManajerTransaksi.java   # Manajemen data transaksi (pemasukan/pengeluaran)
+├── Pemasukan.java          # Representasi objek transaksi pemasukan
+├── Pengeluaran.java        # Representasi objek transaksi pengeluaran
+├── Laporan.java            # Menghasilkan ringkasan pemasukan dan pengeluaran
+├── PenyimpananData.java    # Simpan dan muat data dari/ke file JSON
+├── Transaksi.java          # Kelas induk umum untuk pemasukan dan pengeluaran
+├── data_transaksi.json     # File penyimpanan data transaksi
+└── README.md               # Dokumentasi proyek
