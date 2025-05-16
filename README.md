@@ -40,11 +40,11 @@ Aplikasi ini dibangun menggunakan prinsip **Object-Oriented Programming (OOP)**:
 
 | Anggota | Tugas Utama                                                                 |
 |---------|------------------------------------------------------------------------------|
-| **Anggota 1** | Pengembangan kelas `Transaksi`, `Pemasukan`, dan `Pengeluaran`         |
-| **Anggota 2** | Implementasi logika `ManajerTransaksi`    |
-| **Anggota 3** | Pembuatan laporan (`Laporan.java`) dan perhitungan ringkasan bulanan   |
-| **Anggota 4** | Membuat semua transaksi tersimpan kedalam JSON `PenyimpananData`       |
-| **Anggota 5** | Integrasi, pengujian akhir, dan perbaikan bug sebelum demo             |
+| **Fathir Syahban** | Pengembangan kelas `Transaksi`, `Pemasukan`, dan `Pengeluaran`         |
+| **Muhammad Hairi** | Implementasi logika `ManajerTransaksi`    |
+| **Akmal** | Pembuatan laporan (`Laporan.java`) dan perhitungan ringkasan bulanan   |
+| **Aditya Hisbullah** | Membuat semua transaksi tersimpan kedalam JSON `PenyimpananData`       |
+| **Akhmad Hidayat** | Integrasi, pengujian akhir, dan perbaikan bug sebelum demo             |
 
 ---
 
