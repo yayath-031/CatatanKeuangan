@@ -1,15 +1,18 @@
-public class Pengeluaran extends Transaksi {
+import java.time.LocalDate;
 
-    public Pengeluaran(String tanggal, double jumlah, String kategori, String keterangan) {
+public class Pengeluaran extends Transaksi {
+    public Pengeluaran(LocalDate tanggal, double jumlah, String kategori, String keterangan) {
         super(tanggal, jumlah, kategori, keterangan);
-        if (jumlah < 0) {
-            throw new IllegalArgumentException("Jumlah pengeluaran tidak boleh negatif.");
-        }
-        this.jumlah = -Math.abs(jumlah); // Pastikan jumlah menjadi negatif
     }
 
-    @Override
     public void tampilkanDetail() {
-        System.out.println("[PENGELUARAN] " + tanggal + " | " + kategori + " | Rp" + jumlah + " | " + keterangan);
+        System.out.println("[PENGELUARAN]");
+        System.out.println("Tanggal   : " + getTanggal());
+        System.out.println("Jumlah    : Rp" + getJumlah());
+        System.out.println("Kategori  : " + getKategori());
+        if (getKeterangan() != null && !getKeterangan().isEmpty()) {
+            System.out.println("Keterangan: " + getKeterangan());
+        }
+        System.out.println("----------------------------");
     }
 }

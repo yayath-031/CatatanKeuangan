@@ -40,8 +40,7 @@ public class PenyimpananData {
             }
 
             String json = jsonBuilder.toString();
-            if (json.isEmpty())
-                return transaksiList; // Jika file kosong
+            if (json.isEmpty()) return transaksiList; // Jika file kosong
 
             json = json.substring(1, json.length() - 1); // Buang [ dan ]
             String[] entries = json.split("\\},\\{");
@@ -49,7 +48,7 @@ public class PenyimpananData {
             for (String entry : entries) {
                 entry = entry.replace("{", "").replace("}", "");
 
-                String[] fields = entry.split(",(?=(?:[^\"]\"[^\"]\")[^\"]$)");
+                String[] fields = entry.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                 String tipe = "", tanggal = "", kategori = "", keterangan = "";
                 double jumlah = 0;
 
