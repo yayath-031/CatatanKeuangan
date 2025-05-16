@@ -1,0 +1,51 @@
+[
+  {
+    "tipe": "Pemasukan",
+    "tanggal": "2025-04-01",
+    "jumlah": 300000.0,
+    "kategori": "Gaji",
+    "keterangan": "Gaji Bulanan"
+  },
+  {
+    "tipe": "Pengeluaran",
+    "tanggal": "2025-04-02",
+    "jumlah": 50000.0,
+    "kategori": "Makan",
+    "keterangan": "Beli makan siang"
+  },
+  {
+    "tipe": "Pemasukan",
+    "tanggal": "2025-04-05",
+    "jumlah": 150000.0,
+    "kategori": "Freelance",
+    "keterangan": "Project desain"
+  },
+  {
+    "tipe": "Pengeluaran",
+    "tanggal": "2025-04-06",
+    "jumlah": 75000.0,
+    "kategori": "Transportasi",
+    "keterangan": "Bensin motor"
+  },
+  {
+    "tipe": "Pemasukan",
+    "tanggal": "2025-04-30",
+    "jumlah": 100000.0,
+    "kategori": "Freelace",
+    "keterangan": "Job Video Compro"
+  },
+  {
+    "tipe": "Pemasukan",
+    "tanggal": "2025-05-07",
+    "jumlah": 100000.0,
+    "kategori": "Gaji",
+    "keterangan": "Gaji bulanan"
+  },
+  {
+    "tipe": "Pengeluaran",
+    "tanggal": "2025-04-30",
+    "jumlah": 1000.0,
+    "kategori": "Makan",
+    "keterangan": "Makan snack"
+  }
+]
