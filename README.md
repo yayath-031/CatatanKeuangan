@@ -51,12 +51,48 @@ Aplikasi ini dibangun menggunakan prinsip **Object-Oriented Programming (OOP)**:
 ## 🧩 Struktur Class
 
 ```bash
-├── Main.java                # Entry point aplikasi
-├── ManajerTransaksi.java   # Manajemen data transaksi (pemasukan/pengeluaran)
-├── Pemasukan.java          # Representasi objek transaksi pemasukan
-├── Pengeluaran.java        # Representasi objek transaksi pengeluaran
-├── Laporan.java            # Menghasilkan ringkasan pemasukan dan pengeluaran
-├── PenyimpananData.java    # Simpan dan muat data dari/ke file JSON
-├── Transaksi.java          # Kelas induk umum untuk pemasukan dan pengeluaran
-├── data_transaksi.json     # File penyimpanan data transaksi
-└── README.md               # Dokumentasi proyek
+## 🧱 Struktur Class
+
+```bash
+├── main
+│   └── Main.java
+│       - Menyediakan menu utama untuk menjalankan aplikasi.
+│       - Mengatur navigasi antar fitur: tambah transaksi, lihat transaksi, laporan, simpan/muat data.
+│
+├── Transaksi.java
+│   │   - Class induk yang mewakili transaksi umum dengan atribut:
+│   │     → LocalDate tanggal
+│   │     → double jumlah
+│   │     → String kategori
+│   │     → String keterangan
+│   │   - Method:
+│   │     → tampilkanDetail() [abstract]
+│   │
+│   ├── Pemasukan.java
+│   │   - Subclass dari Transaksi untuk mencatat pemasukan.
+│   │   - Override tampilkanDetail() untuk mencetak data pemasukan.
+│   │
+│   └── Pengeluaran.java
+│       - Subclass dari Transaksi untuk mencatat pengeluaran.
+│       - Override tampilkanDetail() untuk mencetak data pengeluaran.
+│
+├── ManajerTransaksi.java
+│      - Mengelola daftar transaksi:
+│        → tambahTransaksi()
+│        → tampilkanSemuaTransaksi()
+│        → getTotalPemasukan(), getTotalPengeluaran()
+│   
+├── Laporan.java
+│       - Menampilkan ringkasan laporan keuangan:
+│       → total pemasukan
+│       → total pengeluaran
+│       → saldo akhir
+│
+├── PenyimpananData.java
+│       - Menyimpan dan membaca transaksi dari file JSON.
+│       - Method:
+│         → simpanTransaksi()
+│         → muatTransaksi()
+│
+├── data_transaksi.json
+│   - File penyimpanan permanen semua transaksi dalam format JSON.
