@@ -26,7 +26,7 @@ public class Main {
             System.out.println("6. Keluar");
             System.out.print("Pilih menu (1-6): ");
             int pilihan = scanner.nextInt();
-            scanner.nextLine(); // Buang newline
+            scanner.nextLine();
 
             switch (pilihan) {
                 case 1:
@@ -43,7 +43,7 @@ public class Main {
                     int bulan = scanner.nextInt();
                     System.out.print("Masukkan tahun (contoh 2025): ");
                     int tahun = scanner.nextInt();
-                    scanner.nextLine(); // Buang newline
+                    scanner.nextLine(); 
                     laporan.generateLaporanBulanan(bulan, tahun);
                     laporan.tampilkanLaporan();
                     break;
@@ -68,7 +68,7 @@ public class Main {
         String tanggal = scanner.nextLine();
         System.out.print("Jumlah: ");
         double jumlah = scanner.nextDouble();
-        scanner.nextLine(); // Buang newline
+        scanner.nextLine();
         System.out.print("Kategori: ");
         String kategori = scanner.nextLine();
         System.out.print("Keterangan: ");
